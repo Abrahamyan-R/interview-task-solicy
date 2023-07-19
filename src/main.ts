@@ -3,6 +3,7 @@ import { AppModule } from './modules/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { ResponseTransformInterceptor } from './modules/interceptors/response-transform.interceptor';
 
 function initSwagger(app) {
   const options = new DocumentBuilder()
@@ -36,6 +37,7 @@ async function bootstrap() {
       exposeDefaultValues: true,
     },
   }));
+  app.useGlobalInterceptors(new ResponseTransformInterceptor());
 
   configService.get('app.env') !== 'production' && initSwagger(app);
 

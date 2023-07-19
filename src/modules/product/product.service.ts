@@ -82,7 +82,7 @@ export class ProductService {
 
       await queryRunner.commitTransaction();
 
-      return resources;
+      return { resources };
     } catch (e) {
       await queryRunner.rollbackTransaction();
       

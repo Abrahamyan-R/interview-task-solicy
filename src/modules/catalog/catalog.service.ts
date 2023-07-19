@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CatalogRepository } from './catalog.repository';
+import { plainToInstance } from 'class-transformer';
+import { GetCatalogByIdResDto } from './catalog.dto';
 
 @Injectable()
 export class CatalogService {
@@ -12,6 +14,8 @@ export class CatalogService {
 
     if (!catalog) throw new NotFoundException('Catalog was not found');
 
-    return catalog;
+    return plainToInstance(GetCatalogByIdResDto, catalog, {
+      excludeExtraneousValues: true,
+    });
   }
 }
